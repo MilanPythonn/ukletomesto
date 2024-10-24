@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uklete Mesto</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #message { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>DOBRODOSLI U IGRU: UKLETO MESTO</h1>
+    <p id="message"></p>
+    <input type="text" id="input" placeholder="Unesi svoj odgovor...">
+    <button onclick="makeChoice()">Posalji</button>
+
+    <script>
+        let message = document.getElementById('message');
+        let stage = 0;
+
+        function startGame() {
+            stage = 0;
+            message.innerHTML = "CILJ IGRE JE DA NAĐEŠ IZLAZ DO GRADA. DA POKRENEŠ VOZILO UPIŠI 'napred'.";
+        }
+
+        function makeChoice() {
+            let input = document.getElementById('input').value.toLowerCase();
+            document.getElementById('input').value = ''; // Očisti ulaz
+
+            switch (stage) {
+                case 0:
+                    if (input === 'napred') {
+                        stage++;
+                        message.innerHTML = "Voziš i nailaziš na kuću. Da li ćeš ući? Upiši 'ulazim' ili 'dalje'.";
+                    } else {
+                        message.innerHTML = "Nepoznata komanda! Pokušaj ponovo.";
+                    }
+                    break;
+                case 1:
+                    if (input === 'ulazim') {
+                        stage++;
+                        message.innerHTML = "Kuća je zaključana! Da li želiš otključati ili se vratiti? Upiši 'otvaram' ili 'nazad'.";
+                    } else if (input === 'dalje') {
+                        stage += 3;
+                        message.innerHTML = "Zanemaruješ kuću i nastavljaš dalje. Nailaziš na maskiranu osobu. Upiši 'puska' ili 'gazim'.";
+                    } else {
+                        message.innerHTML = "Nepoznata komanda! Pokušaj ponovo.";
+                    }
+                    break;
+                case 2:
+                    if (input === 'otvaram') {
+                        stage++;
+                        message.innerHTML = "Reši zagonetku: Šta može da leti bez krila? Upiši odgovor.";
+                    } else if (input === 'nazad') {
+                        stage = 4;
+                        message.innerHTML = "Zanemaruješ kuću i nastavljaš dalje. Nailaziš na maskiranu osobu. Upiši 'puska' ili 'gazim'.";
+                    } else {
+                        message.innerHTML = "Nepoznata komanda! Pokušaj ponovo.";
+                    }
+                    break;
+                case 3:
+                    if (input === 'oblak') {
+                        stage++;
+                        message.innerHTML = "Otključavaš vrata i ulaziš. Da li želiš ići na sprat? Upiši 'da' ili 'ne'.";
+                    } else {
+                        message.innerHTML = "Pogrešan odgovor! GAME OVER.";
+                        stage = -1; // Kraj igre
+                    }
+                    break;
+                case 4:
+                    if (input === 'puska') {
+                        stage += 5;
+                        message.innerHTML = "Ubijam spodobu i pronalazim mapu. Da bi krenuo za blagom, upiši 'da'.";
+                    } else if (input === 'gazim') {
+                        stage += 6;
+                        message.innerHTML = "Gazim spodobu i nastavljam dalje. Nailaziš na raskrsnicu. Upiši 'desno' ili 'lijevo'.";
+                    } else {
+                        message.innerHTML = "Nepoznata komanda! Pokušaj ponovo.";
+                    }
+                    break;
+                case 5:
+                    if (input === 'da') {
+                        message.innerHTML = "Krećeš u šumu u potrazi za blagom. Nailaziš na još jednu maskiranu osobu. GAME OVER.";
+                        stage = -1; // Kraj igre
+                    } else {
+                        message.innerHTML = "Pogrešan izbor! GAME OVER.";
+                        stage = -1; // Kraj igre
+                    }
+                    break;
+                case 6:
+                    if (input === 'desno') {
+                        message.innerHTML = "Vraćaš se na isto mesto sa početka! GAME OVER.";
+                        stage = -1; // Kraj igre
+                    } else if (input === 'lijevo') {
+                        message.innerHTML = "Uspešno si došao u grad i spasio se! Čestitam na pobedi!";
+                        stage = -1; // Kraj igre
+                    } else {
+                        message.innerHTML = "Pogrešan izbor! GAME OVER.";
+                        stage = -1; // Kraj igre
+                    }
+                    break;
+                default:
+                    message.innerHTML = "Igra je završena. Osveži stranicu da bi počeo ponovo.";
+            }
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
